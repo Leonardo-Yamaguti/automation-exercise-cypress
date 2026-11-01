@@ -10,9 +10,11 @@ describe('Compras completas - casos 15 e 16', () => {
   let usuario;
   let listaProdutos;
   let dadosPagamento;
+  let limparConta;
 
   beforeEach(() => {
     usuario = undefined;
+    limparConta = false;
     cy.fixture('usuario').then((base) => { usuario = gerarUsuario(base); });
     cy.fixture('produtos').then((dados) => { listaProdutos = dados.compra; });
     cy.fixture('pagamento').then((dados) => { dadosPagamento = dados; });
@@ -20,7 +22,7 @@ describe('Compras completas - casos 15 e 16', () => {
   });
 
   afterEach(() => {
-    if (usuario) cy.excluirUsuarioPorApi(usuario);
+    if (limparConta && usuario) cy.excluirUsuarioPorApi(usuario);
   });
 
   function concluirCompra() {
@@ -39,12 +41,14 @@ describe('Compras completas - casos 15 e 16', () => {
 
   it('TC15 - Cadastrar usuario antes do checkout e concluir a compra', () => {
     navegacao.acessarCadastroLogin();
+    limparConta = true;
     cadastro.cadastrarUsuario(usuario);
     navegacao.validarUsuarioAutenticado(usuario.nome);
     concluirCompra();
   });
 
   it('TC16 - Fazer login antes do checkout e concluir a compra', () => {
+    limparConta = true;
     cy.criarUsuarioPorApi(usuario);
     navegacao.acessarCadastroLogin();
     login.efetuarLogin(usuario.email, usuario.senha);
