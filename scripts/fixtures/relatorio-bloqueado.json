@@ -1,0 +1,131 @@
+{
+  "stats": {
+    "tests": 10,
+    "passes": 0,
+    "failures": 4,
+    "pending": 0,
+    "skipped": 6
+  },
+  "results": [
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC01 - Cadastrar usuario completo e excluir a conta",
+              "state": "failed",
+              "isHook": false,
+              "err": {
+                "message": "CypressError: The application redirected to `https://automationexercise.com/` more than 20 times. Please check if it's an intended behavior.\n\nIf so, increase `redirectionLimit` value in configuration.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Cadastro e autenticacao - c...`"
+              }
+            },
+            {
+              "title": "TC02 - Entrar com credenciais corretas e excluir a conta",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC03 - Rejeitar email e senha incorretos",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC04 - Efetuar logout e retornar para o login",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC05 - Impedir cadastro com email ja existente",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC08 - Conferir o catalogo e todos os detalhes do primeiro produto",
+              "state": "failed",
+              "isHook": false,
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationexercise.com/\n\nThe response we received from your web server was:\n\n  > 403: Forbidden\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Catalogo e pesquisa - casos...`"
+              }
+            },
+            {
+              "title": "TC09 - Pesquisar e conferir todos os produtos encontrados",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC10 - Assinar novidades pelo rodape da pagina inicial",
+              "state": "failed",
+              "isHook": false,
+              "err": {
+                "message": "CypressError: `cy.visit()` failed trying to load:\n\nhttps://automationexercise.com/\n\nThe response we received from your web server was:\n\n  > 403: Forbidden\n\nThis was considered a failure because the status code was not `2xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`"
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC15 - Cadastrar usuario antes do checkout e concluir a compra",
+              "state": "failed",
+              "isHook": false,
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttps://automationexercise.com/api/deleteAccount\n\nThe response we received from your web server was:\n\n  > 403: Forbidden\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n"
+              }
+            },
+            {
+              "title": "TC16 - Fazer login antes do checkout e concluir a compra",
+              "state": "skipped",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    }
+  ]
+}

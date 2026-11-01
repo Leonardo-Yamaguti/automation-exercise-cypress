@@ -1,0 +1,131 @@
+{
+  "stats": {
+    "tests": 10,
+    "passes": 10,
+    "failures": 0,
+    "pending": 0,
+    "skipped": 0
+  },
+  "results": [
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC01 - Cadastrar usuario completo e excluir a conta",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC02 - Entrar com credenciais corretas e excluir a conta",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC03 - Rejeitar email e senha incorretos",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC04 - Efetuar logout e retornar para o login",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC05 - Impedir cadastro com email ja existente",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC08 - Conferir o catalogo e todos os detalhes do primeiro produto",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC09 - Pesquisar e conferir todos os produtos encontrados",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC10 - Assinar novidades pelo rodape da pagina inicial",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "tests": [],
+      "suites": [
+        {
+          "tests": [
+            {
+              "title": "TC15 - Cadastrar usuario antes do checkout e concluir a compra",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            },
+            {
+              "title": "TC16 - Fazer login antes do checkout e concluir a compra",
+              "state": "passed",
+              "isHook": false,
+              "err": {
+                "message": ""
+              }
+            }
+          ],
+          "suites": []
+        }
+      ]
+    }
+  ]
+}
