@@ -18,7 +18,30 @@ Data de preparação: 31/10/2026.
 - Inspeção HTTP/HTML adicional conferiu campos do cadastro, credenciais inválidas, e-mail duplicado, logout, produtos, busca, checkout, pagamento fictício, confirmação do pedido e exclusão da conta. Essa inspeção não executa o navegador nem substitui os testes Cypress.
 - ZIP conferido quanto à inclusão de `.github` e exclusão de `node_modules`.
 
-## Execução E2E confirmada no GitHub Actions
+## Conferência dos casos solicitados
+
+Revisão de 01/11/2026 baseada na [página oficial de Test Cases](https://www.automationexercise.com/test_cases). Foram comparados os **113 passos** dos dez casos com os cenários, a preparação de cada teste e as funções chamadas.
+
+| Caso | Passos oficiais conferidos | Spec em `cypress/e2e/` | Módulos em `cypress/modules/` |
+|---|---|---|---|
+| TC01 | 1–18 | `01-cadastro-login.cy.js` | `navegacao`, `cadastro` |
+| TC02 | 1–10 | `01-cadastro-login.cy.js` | `navegacao`, `login` |
+| TC03 | 1–8 | `01-cadastro-login.cy.js` | `navegacao`, `login` |
+| TC04 | 1–10 | `01-cadastro-login.cy.js` | `navegacao`, `login` |
+| TC05 | 1–8 | `01-cadastro-login.cy.js` | `navegacao`, `cadastro` |
+| TC08 | 1–9 | `02-produtos.cy.js` | `navegacao`, `produtos` |
+| TC09 | 1–8 | `02-produtos.cy.js` | `navegacao`, `produtos` |
+| TC10 | 1–7 | `03-assinatura.cy.js` | `navegacao`, `assinatura` |
+| TC15 | 1–18 | `04-compras.cy.js` | `navegacao`, `cadastro`, `produtos`, `pedido`, `pagamento` |
+| TC16 | 1–17 | `04-compras.cy.js` | `navegacao`, `login`, `produtos`, `pedido`, `pagamento` |
+
+O runner abre o navegador. Cada cenário acessa a página inicial e verifica sua exibição. A criação de contas por API prepara as condições dos casos que exigem usuário existente; os fluxos solicitados de cadastro, login, logout, compra e exclusão continuam sendo realizados pela interface.
+
+Na revisão, foram reforçadas três asserções: visibilidade do título de informações da conta (TC01, também reutilizado pelo TC15) e visibilidade do nome e do preço no detalhe do produto (TC08). Antes, esses pontos conferiam o texto e seus componentes; agora também exigem explicitamente que os elementos estejam visíveis. Os demais passos já estavam cobertos.
+
+## Histórico de execução no GitHub Actions
+
+### Execução #1: versão inicial aprovada
 
 Em **01/11/2026**, a suíte completa foi executada no workflow **Testes Cypress - Automation Exercise**, execução **#1**, sobre o commit `a5485b3f3602510b0306aa48904313f05fc516b3`.
 
@@ -39,9 +62,29 @@ Em **01/11/2026**, a suíte completa foi executada no workflow **Testes Cypress 
 
 [Repositório](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress).
 
+### Execução #2: revisão impedida pela verificação do site
+
+Em **01/11/2026**, o commit `10caa1d08f9b066285edf91b28a2e012d8a0bbd8`, contendo os reforços de visibilidade, foi executado na pipeline. A instalação e a verificação estática passaram, mas a aplicação mostrou uma tela de verificação de requisições, repetiu redirecionamentos para a página inicial e retornou **HTTP 403**.
+
+As capturas do runner mostram a mensagem de verificação e `failedChecks=webdriverCheck`. As falhas ocorreram na abertura da aplicação, antes das novas asserções. A limpeza por API também recebeu HTTP 403. O resumo real do reporter foi:
+
+| Resultado | Quantidade |
+|---|---:|
+| Testes previstos | 10 |
+| Aprovados | 0 |
+| Falhos | 4 |
+| Pendentes | 0 |
+| Ignorados após falha na preparação | 6 |
+
+O artefato **relatorio-cypress-2** contém relatório, capturas e vídeos dessa tentativa. [Ver execução #2 e evidências](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41282347190).
+
+O resumo da pipeline foi aprimorado para mostrar também os testes ignorados, distinguindo o total previsto de uma execução completa. Essa alteração foi verificada usando o JSON real da execução #2.
+
+**Situação atual:** a conferência do código cobre os dez casos e seus 113 passos. A versão revisada tem validação E2E pendente, pois o site impediu o acesso nessa tentativa. A aprovação da execução #1 permanece como evidência da versão inicial, não como aprovação das alterações posteriores.
+
 ## Execução local e futuras alterações
 
-Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução completa acima foi realizada no runner do GitHub, onde a instalação funcionou. A validação E2E confirmada é a dessa execução, não apenas a inspeção estática.
+Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução inicial aprovada foi realizada no runner do GitHub, onde a instalação funcionou. Os resultados de cada versão estão registrados separadamente acima.
 
 Para repetir no computador:
 

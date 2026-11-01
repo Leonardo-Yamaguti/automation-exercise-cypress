@@ -2,7 +2,9 @@
 
 Projeto individual de Leonardo Alan Yamaguti da Silva para Automação Web com Cypress.
 
-**Validação em 01/11/2026:** os dez testes passaram no GitHub Actions, sem falhas ou testes pendentes. [Ver execução e baixar relatórios](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41281358544).
+**Execução inicial em 01/11/2026:** os dez testes passaram no GitHub Actions, sem falhas ou testes pendentes. [Ver execução #1 e relatórios](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41281358544).
+
+**Estado da revisão:** os 113 passos dos dez casos foram conferidos e três asserções de visibilidade foram reforçadas. A [execução #2](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41282347190) encontrou uma tela de verificação do site, redirecionamentos repetidos e HTTP 403: houve quatro casos com falha no acesso e seis ignorados. A versão revisada ainda depende de nova execução E2E quando o site permitir o acesso. O resultado aprovado da execução #1 refere-se à versão inicial. Veja [VALIDACAO.md](VALIDACAO.md).
 
 Implementa os casos **1, 2, 3, 4, 5, 8, 9, 10, 15 e 16** da aplicação fictícia [Automation Exercise](https://automationexercise.com/test_cases).
 
