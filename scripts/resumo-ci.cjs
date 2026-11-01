@@ -1,29 +1,33 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { analisarRelatorio, formatarResumo } = require('./relatorio.cjs');
 
 const pasta = path.resolve(__dirname, '../cypress/reports');
-const resumo = ['## Automation Exercise - execucao Cypress', ''];
-const arquivos = fs.existsSync(pasta)
-  ? fs.readdirSync(pasta).filter((nome) => nome.endsWith('.json'))
-  : [];
-const candidato = arquivos.find((nome) => nome === 'relatorio.json') || arquivos[0];
+const validar = process.argv.includes('--validar');
+let texto;
 
-if (candidato) {
-  const dados = JSON.parse(fs.readFileSync(path.join(pasta, candidato), 'utf8'));
-  if (dados.stats) {
-    resumo.push('| Resultado | Quantidade |', '|---|---:|',
-      '| Testes previstos | ' + dados.stats.tests + ' |',
-      '| Aprovados | ' + dados.stats.passes + ' |',
-      '| Falhos | ' + dados.stats.failures + ' |',
-      '| Pendentes | ' + dados.stats.pending + ' |',
-      '| Ignorados | ' + (dados.stats.skipped ?? 0) + ' |', '');
+try {
+  const dados = JSON.parse(fs.readFileSync(path.join(pasta, 'relatorio.json'), 'utf8'));
+  const analise = analisarRelatorio(dados);
+  texto = formatarResumo(analise, process.env.GITHUB_RUN_NUMBER || 'N');
+  if (validar) {
+    const html = path.join(pasta, 'relatorio.html');
+    if (!fs.existsSync(html) || fs.statSync(html).size === 0) {
+      analise.erros.push('Relatorio HTML ausente ou vazio.');
+    }
+    if (analise.erros.length) {
+      texto += '\nValidacao da entrega:\n' + analise.erros.map((erro) => '- ' + erro).join('\n') + '\n';
+      process.exitCode = 1;
+    }
   }
+} catch (erro) {
+  texto = '## Automation Exercise - execucao nao comprovada\n\n' +
+    'Relatorio ausente ou invalido. Confira as etapas anteriores do job.\n\n' + erro.message + '\n';
+  if (validar) process.exitCode = 1;
 }
-if (!candidato) {
-  resumo.push('Nenhum relatorio foi gerado. Confira as etapas anteriores do job.', '');
+
+if (!validar && process.env.GITHUB_STEP_SUMMARY) {
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, texto);
 }
-resumo.push('Baixe o artefato **relatorio-cypress-N** desta execucao e abra **relatorio.html**.');
-const texto = resumo.join('\n') + '\n';
-if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, texto);
 console.log(texto);
 

@@ -47,6 +47,7 @@ const workflow = fs.readFileSync(path.join(raiz, '.github/workflows/tests.yml'),
 assert(workflow.includes('workflow_dispatch:'));
 assert(workflow.includes('npm ci'));
 assert(workflow.includes('npm run test:ci'));
+assert(workflow.includes('npm run verificar:relatorio'));
 assert(workflow.includes('actions/upload-artifact@'));
 assert(workflow.includes('if: always()'));
 assert(!workflow.includes('continue-on-error'));
