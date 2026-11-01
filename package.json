@@ -1,0 +1,31 @@
+{
+  "name": "tcc-automation-exercise-cypress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Trabalho de conclusao de Automacao Web: dez cenarios do Automation Exercise com Cypress, modularizacao, Mochawesome e GitHub Actions.",
+  "author": "Leonardo Alan Yamaguti da Silva",
+  "engines": {
+    "node": ">=22.13.0 <23 || >=24.0.0 <25"
+  },
+  "scripts": {
+    "test": "cypress run",
+    "test:ci": "cypress run --headless",
+    "test:chrome": "cypress run --browser chrome --headless",
+    "test:cadastro": "cypress run --spec cypress/e2e/01-cadastro-login.cy.js",
+    "test:produtos": "cypress run --spec cypress/e2e/02-produtos.cy.js",
+    "test:assinatura": "cypress run --spec cypress/e2e/03-assinatura.cy.js",
+    "test:compras": "cypress run --spec cypress/e2e/04-compras.cy.js",
+    "cy:open": "cypress open",
+    "lint": "eslint .",
+    "verificar": "npm run lint && node scripts/verificar-entrega.cjs",
+    "limpar:relatorios": "node scripts/limpar-relatorios.cjs",
+    "empacotar": "node scripts/empacotar.cjs"
+  },
+  "devDependencies": {
+    "archiver": "8.0.0",
+    "cypress": "16.2.1",
+    "cypress-mochawesome-reporter": "5.0.0",
+    "eslint": "10.14.0",
+    "eslint-plugin-cypress": "7.0.2"
+  }
+}
