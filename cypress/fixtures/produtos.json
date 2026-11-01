@@ -1,0 +1,27 @@
+{
+  "primeiroProduto": {
+    "id": 1,
+    "nome": "Blue Top",
+    "categoria": "Women > Tops",
+    "preco": 500,
+    "disponibilidade": "In Stock",
+    "condicao": "New",
+    "marca": "Polo"
+  },
+  "pesquisa": "top",
+  "compra": [
+    {
+      "id": 1,
+      "nome": "Blue Top",
+      "preco": 500,
+      "quantidade": 1
+    },
+    {
+      "id": 2,
+      "nome": "Men Tshirt",
+      "preco": 400,
+      "quantidade": 1
+    }
+  ]
+}
+

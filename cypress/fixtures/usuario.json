@@ -1,0 +1,19 @@
+{
+  "nome": "Aluno QA Cypress",
+  "senha": "TesteCypress2026!",
+  "titulo": "Mr",
+  "dia": "15",
+  "mes": "6",
+  "ano": "1995",
+  "primeiroNome": "Aluno",
+  "sobrenome": "Cypress",
+  "empresa": "Estudos QA",
+  "endereco": "123 Automation Avenue",
+  "complemento": "Apt 10",
+  "pais": "Canada",
+  "estado": "Ontario",
+  "cidade": "Toronto",
+  "cep": "M5V2T6",
+  "telefone": "4165550100"
+}
+

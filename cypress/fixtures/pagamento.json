@@ -1,0 +1,9 @@
+{
+  "nomeCartao": "Aluno Cypress",
+  "numeroCartao": "4111111111111111",
+  "cvc": "123",
+  "mes": "12",
+  "ano": "2032",
+  "comentario": "Pedido ficticio realizado na aplicacao de estudos Automation Exercise."
+}
+
