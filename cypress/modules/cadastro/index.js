@@ -38,7 +38,8 @@ function iniciarCadastro(nome, email) {
 }
 
 function preencherCadastro(usuario) {
-  cy.get(seletores.tituloConta).should('contain.text', 'Enter Account Information');
+  cy.get(seletores.tituloConta)
+    .should('be.visible').and('contain.text', 'Enter Account Information');
   cy.get(usuario.titulo === 'Mr' ? seletores.tituloMasculino : seletores.tituloFeminino).check();
   cy.get(seletores.nome).should('have.value', usuario.nome);
   cy.get(seletores.email).should('have.value', usuario.email);
