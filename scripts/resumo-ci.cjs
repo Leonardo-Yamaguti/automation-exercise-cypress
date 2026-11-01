@@ -9,16 +9,15 @@ let texto;
 try {
   const dados = JSON.parse(fs.readFileSync(path.join(pasta, 'relatorio.json'), 'utf8'));
   const analise = analisarRelatorio(dados);
+  const html = path.join(pasta, 'relatorio.html');
+  if (!fs.existsSync(html) || !fs.statSync(html).isFile() || fs.statSync(html).size === 0) {
+    analise.erros.push('Relatorio HTML ausente ou vazio.');
+  }
+  analise.completo = analise.erros.length === 0;
   texto = formatarResumo(analise, process.env.GITHUB_RUN_NUMBER || 'N');
-  if (validar) {
-    const html = path.join(pasta, 'relatorio.html');
-    if (!fs.existsSync(html) || fs.statSync(html).size === 0) {
-      analise.erros.push('Relatorio HTML ausente ou vazio.');
-    }
-    if (analise.erros.length) {
-      texto += '\nValidacao da entrega:\n' + analise.erros.map((erro) => '- ' + erro).join('\n') + '\n';
-      process.exitCode = 1;
-    }
+  if (analise.erros.length) {
+    texto += '\nValidacao da entrega:\n' + analise.erros.map((erro) => '- ' + erro).join('\n') + '\n';
+    if (validar) process.exitCode = 1;
   }
 } catch (erro) {
   texto = '## Automation Exercise - execucao nao comprovada\n\n' +

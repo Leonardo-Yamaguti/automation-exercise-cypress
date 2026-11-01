@@ -66,7 +66,7 @@ function formatarResumo(analise, numeroExecucao = 'N') {
   }
   linhas.push(analise.completo
     ? '**Execucao completa: os dez casos obrigatorios foram aprovados.**'
-    : '**Execucao incompleta ou com falhas: os dez casos ainda nao estao aprovados.**', '',
+    : '**Validacao incompleta ou com falhas: confira os casos e os arquivos de relatorio.**', '',
   'Baixe **relatorio-cypress-' + numeroExecucao + '** e abra **reports/relatorio.html**.');
   return linhas.join('\n') + '\n';
 }
