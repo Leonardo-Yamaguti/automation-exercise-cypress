@@ -1,0 +1,61 @@
+name: Testes Cypress - Automation Exercise
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cypress-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: Dez casos obrigatorios
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@v5
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Restaurar cache do Cypress
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Instalar dependencias e Cypress
+        run: npm ci
+
+      - name: Conferir codigo e requisitos
+        run: npm run verificar
+
+      - name: Executar os dez casos
+        run: npm run test:ci
+
+      - name: Publicar resumo da execucao
+        if: always()
+        run: node scripts/resumo-ci.cjs
+
+      - name: Disponibilizar relatorios e evidencias
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-cypress-${{ github.run_number }}
+          path: |
+            cypress/reports/
+            cypress/screenshots/
+            cypress/videos/
+          if-no-files-found: warn
+          retention-days: 14
+
