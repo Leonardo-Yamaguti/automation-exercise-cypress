@@ -8,6 +8,8 @@ Projeto individual de Leonardo Alan Yamaguti da Silva para Automação Web com C
 
 Implementa os casos **1, 2, 3, 4, 5, 8, 9, 10, 15 e 16** da aplicação fictícia [Automation Exercise](https://automationexercise.com/test_cases).
 
+**Verificação de código aprovada:** a [execução #3](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41284338528), no escopo **codigo**, aprovou a instalação, ESLint, os oito testes do validador, a conferência de estrutura e a geração do ZIP. O job dos dez E2E ficou ignorado nesse escopo; essa aprovação é parcial.
+
 ## Começar
 
 Instale **Node.js 24 LTS** e **Google Chrome**. Na pasta que contém `package.json`:

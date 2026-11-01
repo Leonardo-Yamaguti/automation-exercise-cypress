@@ -96,6 +96,17 @@ O resumo da pipeline foi aprimorado para mostrar também os testes ignorados, di
 
 Os arquivos em `scripts/fixtures/` servem para testar o validador. Não são relatórios de execução da versão atual. A aprovação E2E dessa versão continua pendente até a aplicação permitir acesso.
 
+### Execução #3: verificação de código aprovada
+
+Em **01/11/2026**, a [execução #3](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41284338528), sobre o commit `2399c6ce6448996c5f51f24683b986339fbda3ff` e no escopo **codigo**, concluiu com sucesso:
+
+- instalação das dependências de verificação;
+- ESLint e oito testes do validador, todos aprovados;
+- conferência dos dez IDs obrigatórios, sintaxe, fixtures, lockfile e workflow;
+- geração e publicação do ZIP em **projeto-cypress-3**.
+
+O job **Dez casos obrigatorios** foi **ignorado** por escolha explícita do escopo. A execução #3 não acessou a aplicação e não comprova aprovação E2E das correções. Os 37 arquivos do repositório foram comparados com a cópia local, sem diferenças, antes desta atualização de documentação.
+
 Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução inicial aprovada foi realizada no runner do GitHub, onde a instalação funcionou. Os resultados de cada versão estão registrados separadamente acima.
 
 Para repetir no computador:
