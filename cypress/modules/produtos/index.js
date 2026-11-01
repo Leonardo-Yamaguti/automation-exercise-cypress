@@ -22,8 +22,8 @@ function abrirPrimeiroProdutoEValidar(produto) {
   cy.get(seletores.primeiroDetalhe).first().click();
   cy.location('pathname').should('eq', '/product_details/' + produto.id);
   cy.get(seletores.detalhes).should('be.visible');
-  cy.get(seletores.nomeDetalhe).should('have.text', produto.nome);
-  cy.get(seletores.precoDetalhe).should('have.text', 'Rs. ' + produto.preco);
+  cy.get(seletores.nomeDetalhe).should('be.visible').and('have.text', produto.nome);
+  cy.get(seletores.precoDetalhe).should('be.visible').and('have.text', 'Rs. ' + produto.preco);
   cy.contains(seletores.detalhes + ' p', 'Category: ' + produto.categoria).should('be.visible');
   cy.contains(seletores.detalhes + ' p', 'Availability: ' + produto.disponibilidade).should('be.visible');
   cy.contains(seletores.detalhes + ' p', 'Condition: ' + produto.condicao).should('be.visible');
