@@ -4,6 +4,15 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      escopo:
+        description: Completo executa os dez E2E; codigo verifica apenas o projeto
+        required: true
+        default: completo
+        type: choice
+        options:
+          - completo
+          - codigo
 
 permissions:
   contents: read
@@ -13,8 +22,54 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  qualidade:
+    name: Codigo e testes do validador
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Obter codigo
+        uses: actions/checkout@v5
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Instalar dependencias de verificacao
+        run: npm ci
+        env:
+          CYPRESS_INSTALL_BINARY: '0'
+
+      - name: Conferir codigo e requisitos
+        run: npm run verificar
+
+      - name: Gerar ZIP do projeto
+        run: npm run empacotar
+
+      - name: Disponibilizar projeto
+        uses: actions/upload-artifact@v7
+        with:
+          name: projeto-cypress-${{ github.run_number }}
+          path: dist/automation-exercise-cypress.zip
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Informar alcance da verificacao
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,
+            '## Verificacoes de codigo concluidas\n\n' +
+            'ESLint, testes do validador de relatorios, estrutura dos dez casos e ZIP conferidos.\n\n' +
+            'Esta etapa nao executa os dez testes E2E. ' +
+            'A aprovacao da aplicacao depende do job Dez casos obrigatorios.\n');
+          NODE
+
   e2e:
     name: Dez casos obrigatorios
+    needs: qualidade
+    if: github.event_name != 'workflow_dispatch' || inputs.escopo == 'completo'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
 
@@ -29,16 +84,13 @@ jobs:
           cache: npm
 
       - name: Restaurar cache do Cypress
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
 
       - name: Instalar dependencias e Cypress
         run: npm ci
-
-      - name: Conferir codigo e requisitos
-        run: npm run verificar
 
       - name: Executar os dez casos
         run: npm run test:ci
@@ -47,9 +99,13 @@ jobs:
         if: always()
         run: node scripts/resumo-ci.cjs
 
+      - name: Validar aprovacao dos dez casos e relatorios
+        if: always()
+        run: npm run verificar:relatorio
+
       - name: Disponibilizar relatorios e evidencias
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: relatorio-cypress-${{ github.run_number }}
           path: |
