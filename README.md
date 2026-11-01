@@ -10,7 +10,7 @@ Implementa os casos **1, 2, 3, 4, 5, 8, 9, 10, 15 e 16** da aplicação fictíci
 
 ## Começar
 
-Instale **Node.js 24 LTS**. Na pasta que contém `package.json`:
+Instale **Node.js 24 LTS** e **Google Chrome**. Na pasta que contém `package.json`:
 
 ```bash
 npm ci
@@ -57,6 +57,8 @@ Os testes de compra adicionam dois produtos e conferem endereço de entrega, end
 | `cypress.config.js` | Configuração do runner e dos relatórios. |
 | `.github/workflows/tests.yml` | Execução e publicação de relatórios no GitHub Actions. |
 | `scripts/` | Verificação da entrega, resumo e empacotamento. |
+| `scripts/relatorio.test.cjs` | Oito testes locais do validador de relatórios. |
+| `scripts/fixtures/` | Amostras reduzidas de relatórios históricos para testar o validador. |
 
 A arquitetura usa funções e `module.exports` em módulos de ações de negócio, conforme a abordagem dos exemplos disponibilizados. As specs não contêm seletores nem asserções.
 
@@ -67,6 +69,8 @@ Os seletores priorizam `data-qa`, IDs, atributos semânticos e escopo do compone
 Cada teste começa em um contexto isolado, com e-mail exclusivo no domínio de exemplo `example.com`. Os casos que exigem usuário já existente criam sua própria conta pela API. Login, logout, cadastro, compras e exclusões previstos nos cenários continuam sendo exercitados pela interface.
 
 A limpeza posterior usa a API e é restrita ao prefixo de contas geradas por este projeto. Aceita conta já excluída, permitindo que o cenário faça a exclusão pela interface. Nenhuma conta fixa de aluno ou professor é utilizada.
+
+Os testes de compra só solicitam limpeza depois que o cenário inicia a preparação da conta. Uma falha na abertura da página inicial não dispara uma exclusão desnecessária.
 
 Os dados de pagamento são fictícios e destinam-se exclusivamente à aplicação de estudos.
 
@@ -84,6 +88,14 @@ O Mochawesome gera HTML e JSON, com os resultados reais da execução. Falhas ge
 
 O arquivo HTML é gerado pelo runner quando a suíte é executada; um relatório de aprovação não é criado artificialmente no código-fonte.
 
+Confira também o resultado e os arquivos obrigatórios:
+
+```bash
+npm run verificar:relatorio
+```
+
+Esse comando retorna erro se faltar HTML/JSON, se algum dos dez IDs estiver ausente ou repetido, ou se houver falhas, pendências ou testes ignorados. O resumo da pipeline mostra o resultado de cada caso.
+
 Para excluir resultados anteriores:
 
 ```bash
@@ -100,13 +112,24 @@ npm run test:compras
 npm run test:chrome
 ```
 
-O comando padrão e a pipeline usam o Electron incluído no Cypress. `test:chrome` requer Google Chrome instalado.
+Os comandos de execução e a pipeline usam Google Chrome, que deve estar instalado. Em `npm run cy:open`, selecione Chrome. O uso de Chrome acompanha a recomendação atual do Cypress, pois Electron está descontinuado como navegador de testes.
+
+Os oito testes de `npm run test:unit` verificam somente o validador de relatórios. Usam amostras dos JSONs reais das execuções #1 e #2; esses arquivos não representam aprovação da versão atual nem substituem os dez E2E.
 
 ## GitHub Actions
 
 O workflow roda em `push`, `pull_request` e execução manual (`workflow_dispatch`), em Ubuntu 24.04 e Node.js 24. Não exige Cypress Cloud, chave de gravação nem secrets.
 
-As etapas instalam as dependências, verificam o projeto, executam os dez casos e publicam relatórios, screenshots e vídeos em um artefato chamado `relatorio-cypress-N`. A publicação ocorre também após falha, quando há arquivos gerados; a falha do teste mantém a pipeline vermelha.
+O job **Codigo e testes do validador** instala as dependências de verificação, executa ESLint, os oito testes do validador e a conferência de estrutura, e publica o ZIP em **projeto-cypress-N**.
+
+Em seguida, o job **Dez casos obrigatorios** executa o Cypress e exige dez casos aprovados e relatórios HTML/JSON. Relatórios, screenshots e vídeos são publicados em **relatorio-cypress-N**, também após falha quando há arquivos gerados.
+
+Na execução manual, escolha o escopo:
+
+- **completo** (padrão): verifica o código e executa os dez E2E. É também o comportamento de push e pull request.
+- **codigo**: verifica o projeto sem acessar a aplicação e deixa o job E2E ignorado. Uma execução verde nesse modo confirma apenas a verificação do código.
+
+Enquanto a aplicação exigir verificação de acesso ou retornar HTTP 403, a aprovação E2E permanece pendente. O modo **codigo** permite verificar as correções locais sem fazer novas requisições ao site bloqueado.
 
 Os artefatos ficam disponíveis por 14 dias. O resumo aparece na página da execução.
 
@@ -127,7 +150,7 @@ A aplicação pública pode apresentar indisponibilidade, lentidão e anúncios.
 
 A página de pagamento exibe uma confirmação antes de navegar para a página de pedido concluído. A automação confere esse evento e a confirmação final.
 
-Veja [VALIDACAO.md](VALIDACAO.md) para os resultados reais e o link da execução confirmada no GitHub Actions.
+Veja [VALIDACAO.md](VALIDACAO.md) para o histórico e o alcance de cada verificação.
 
 ## Referências
 

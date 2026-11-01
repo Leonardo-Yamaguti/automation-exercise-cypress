@@ -84,6 +84,18 @@ O resumo da pipeline foi aprimorado para mostrar também os testes ignorados, di
 
 ## Execução local e futuras alterações
 
+### Correções posteriores à execução #2
+
+- Corrigida a limpeza dos testes de compra para não chamar a API quando a página inicial falha antes da preparação da conta.
+- Os comandos Cypress agora usam Chrome, substituindo Electron, descontinuado como navegador de testes. Essa alteração de manutenção não comprova resolução do bloqueio de acesso.
+- Cache e upload de artefatos atualizados para `actions/cache@v6` e `actions/upload-artifact@v7`.
+- Criado validador que exige exatamente os dez IDs, cada um uma única vez e aprovado, além dos arquivos HTML/JSON.
+- O resumo agora lista o resultado por caso e identifica execuções incompletas.
+- Criados oito testes locais do validador, usando amostras reduzidas dos relatórios reais das execuções #1 e #2. Os oito passaram localmente.
+- Adicionado escopo manual **codigo**, que verifica o projeto e gera seu ZIP sem acessar o site. O escopo **completo** continua sendo o padrão e executa os dez E2E.
+
+Os arquivos em `scripts/fixtures/` servem para testar o validador. Não são relatórios de execução da versão atual. A aprovação E2E dessa versão continua pendente até a aplicação permitir acesso.
+
 Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução inicial aprovada foi realizada no runner do GitHub, onde a instalação funcionou. Os resultados de cada versão estão registrados separadamente acima.
 
 Para repetir no computador:
