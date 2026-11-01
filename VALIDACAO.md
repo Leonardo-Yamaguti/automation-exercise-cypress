@@ -39,6 +39,24 @@ O runner abre o navegador. Cada cenário acessa a página inicial e verifica sua
 
 Na revisão, foram reforçadas três asserções: visibilidade do título de informações da conta (TC01, também reutilizado pelo TC15) e visibilidade do nome e do preço no detalhe do produto (TC08). Antes, esses pontos conferiam o texto e seus componentes; agora também exigem explicitamente que os elementos estejam visíveis. Os demais passos já estavam cobertos.
 
+## Conferência dos requisitos de entrega
+
+| Requisito | Evidência e situação |
+|---|---|
+| Casos 1, 2, 3, 4, 5, 8, 9, 10, 15 e 16 | Dez cenários implementados; mapeamento dos 113 passos acima. |
+| Execução via GitHub Actions | Workflow com execução completa em push, pull request e modo manual; histórico abaixo. |
+| Execução sem quebras | **Pendente na versão revisada.** A execução #1 passou na versão inicial; a #2 foi bloqueada pela verificação de acesso da aplicação. As verificações de código não substituem esse requisito. |
+| Seletores e padrões | `data-qa`, IDs e atributos com escopo; funções por funcionalidade e cenários isolados. Sem pausas fixas, cliques forçados, testes exclusivos ou ignorados no código. ESLint aprovado. |
+| Boas práticas | Lockfile e versões exatas, dados fictícios e exclusivos, preparação e limpeza próprias, verificação de sintaxe e estrutura. |
+| Relatórios | HTML/JSON, screenshots e vídeos no Actions; validador exige os dez casos aprovados e HTML não vazio. |
+| Projeto e URL do GitHub | Repositório publicado e ZIP com `.github`, sem `node_modules`, credenciais ou resultados de execuções anteriores. |
+
+### Correção do resumo e testes do comando
+
+Na conferência final, foi corrigida uma inconsistência: o comando podia anunciar execução completa a partir do JSON antes de constatar que faltava o HTML. A presença do HTML agora é verificada antes de formatar o resumo, tanto no modo informativo quanto no modo que reprova a entrega.
+
+Foram adicionados quatro testes que executam o comando em pastas temporárias: amostra histórica aprovada com HTML, HTML ausente ou vazio, amostra histórica bloqueada e JSON ausente. Também conferem o texto gravado no resumo do Actions. `npm run verificar` aprovou ESLint, **12 testes locais** e a estrutura do projeto. Esses testes verificam o processamento dos relatórios e não executam a aplicação.
+
 ## Histórico de execução no GitHub Actions
 
 ### Execução #1: versão inicial aprovada
@@ -106,6 +124,14 @@ Em **01/11/2026**, a [execução #3](https://github.com/Leonardo-Yamaguti/automa
 - geração e publicação do ZIP em **projeto-cypress-3**.
 
 O job **Dez casos obrigatorios** foi **ignorado** por escolha explícita do escopo. A execução #3 não acessou a aplicação e não comprova aprovação E2E das correções. Os 37 arquivos do repositório foram comparados com a cópia local, sem diferenças, antes desta atualização de documentação.
+
+### Execução #4: correção do resumo validada no Actions
+
+Em **01/11/2026**, a [execução #4](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41285513035), sobre o commit `7e984fc88b6f00fae018b20a8332e3575c98dc2f`, aprovou a instalação, ESLint, **12 testes do validador e do comando**, a verificação estática e a geração do ZIP. O artefato **projeto-cypress-4** foi publicado.
+
+Os testes do comando confirmaram que HTML ausente ou vazio reprova a validação e não produz mensagem de aprovação no resumo. O modo escolhido foi **codigo**, portanto o job dos dez E2E ficou **ignorado**. Essa execução não acessou a aplicação. A aprovação E2E da versão revisada permanece pendente; nenhuma execução parcial está sendo apresentada como dez cenários aprovados.
+
+Após essa execução, somente esta documentação e o README foram atualizados; o código verificado no Actions permanece o mesmo.
 
 Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução inicial aprovada foi realizada no runner do GitHub, onde a instalação funcionou. Os resultados de cada versão estão registrados separadamente acima.
 

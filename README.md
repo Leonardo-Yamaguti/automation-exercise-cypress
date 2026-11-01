@@ -8,7 +8,7 @@ Projeto individual de Leonardo Alan Yamaguti da Silva para Automação Web com C
 
 Implementa os casos **1, 2, 3, 4, 5, 8, 9, 10, 15 e 16** da aplicação fictícia [Automation Exercise](https://automationexercise.com/test_cases).
 
-**Verificação de código aprovada:** a [execução #3](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41284338528), no escopo **codigo**, aprovou a instalação, ESLint, os oito testes do validador, a conferência de estrutura e a geração do ZIP. O job dos dez E2E ficou ignorado nesse escopo; essa aprovação é parcial.
+**Verificação de código aprovada:** a [execução #4](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41285513035), no escopo **codigo**, aprovou a instalação, ESLint, os 12 testes do validador e de seu comando, a conferência de estrutura e a geração do ZIP. A correção que impede anunciar aprovação sem HTML está incluída. O job dos dez E2E ficou ignorado nesse escopo; essa aprovação é parcial.
 
 ## Começar
 
@@ -60,6 +60,7 @@ Os testes de compra adicionam dois produtos e conferem endereço de entrega, end
 | `.github/workflows/tests.yml` | Execução e publicação de relatórios no GitHub Actions. |
 | `scripts/` | Verificação da entrega, resumo e empacotamento. |
 | `scripts/relatorio.test.cjs` | Oito testes locais do validador de relatórios. |
+| `scripts/resumo-ci.test.cjs` | Quatro testes do comando de validação e do resumo publicado. |
 | `scripts/fixtures/` | Amostras reduzidas de relatórios históricos para testar o validador. |
 
 A arquitetura usa funções e `module.exports` em módulos de ações de negócio, conforme a abordagem dos exemplos disponibilizados. As specs não contêm seletores nem asserções.
@@ -96,7 +97,7 @@ Confira também o resultado e os arquivos obrigatórios:
 npm run verificar:relatorio
 ```
 
-Esse comando retorna erro se faltar HTML/JSON, se algum dos dez IDs estiver ausente ou repetido, ou se houver falhas, pendências ou testes ignorados. O resumo da pipeline mostra o resultado de cada caso.
+Esse comando retorna erro se faltar HTML/JSON, se algum dos dez IDs estiver ausente ou repetido, ou se houver falhas, pendências ou testes ignorados. O resumo da pipeline mostra o resultado de cada caso e só anuncia aprovação completa quando também existe HTML não vazio.
 
 Para excluir resultados anteriores:
 
@@ -116,13 +117,13 @@ npm run test:chrome
 
 Os comandos de execução e a pipeline usam Google Chrome, que deve estar instalado. Em `npm run cy:open`, selecione Chrome. O uso de Chrome acompanha a recomendação atual do Cypress, pois Electron está descontinuado como navegador de testes.
 
-Os oito testes de `npm run test:unit` verificam somente o validador de relatórios. Usam amostras dos JSONs reais das execuções #1 e #2; esses arquivos não representam aprovação da versão atual nem substituem os dez E2E.
+Os doze testes de `npm run test:unit` verificam o validador de relatórios e seu comando: aprovação histórica, casos ausentes ou repetidos, falhas, testes ignorados e HTML/JSON ausentes. Usam amostras dos JSONs reais das execuções #1 e #2 em pastas temporárias; esses arquivos não representam aprovação da versão atual nem substituem os dez E2E.
 
 ## GitHub Actions
 
 O workflow roda em `push`, `pull_request` e execução manual (`workflow_dispatch`), em Ubuntu 24.04 e Node.js 24. Não exige Cypress Cloud, chave de gravação nem secrets.
 
-O job **Codigo e testes do validador** instala as dependências de verificação, executa ESLint, os oito testes do validador e a conferência de estrutura, e publica o ZIP em **projeto-cypress-N**.
+O job **Codigo e testes do validador** instala as dependências de verificação, executa ESLint, os doze testes do validador e de seu comando, confere a estrutura e publica o ZIP em **projeto-cypress-N**.
 
 Em seguida, o job **Dez casos obrigatorios** executa o Cypress e exige dez casos aprovados e relatórios HTML/JSON. Relatórios, screenshots e vídeos são publicados em **relatorio-cypress-N**, também após falha quando há arquivos gerados.
 
