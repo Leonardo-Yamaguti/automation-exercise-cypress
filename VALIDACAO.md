@@ -18,17 +18,32 @@ Data de preparação: 31/10/2026.
 - Inspeção HTTP/HTML adicional conferiu campos do cadastro, credenciais inválidas, e-mail duplicado, logout, produtos, busca, checkout, pagamento fictício, confirmação do pedido e exclusão da conta. Essa inspeção não executa o navegador nem substitui os testes Cypress.
 - ZIP conferido quanto à inclusão de `.github` e exclusão de `node_modules`.
 
-## Limitação de execução neste ambiente
+## Execução E2E confirmada no GitHub Actions
 
-O download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do arquivo ZIP. Por isso, o navegador Cypress não pôde ser iniciado neste ambiente.
+Em **01/11/2026**, a suíte completa foi executada no workflow **Testes Cypress - Automation Exercise**, execução **#1**, sobre o commit `a5485b3f3602510b0306aa48904313f05fc516b3`.
 
-**Os dez testes E2E ainda não têm aprovação de execução confirmada.** As verificações estáticas e a inspeção da aplicação não equivalem à aprovação da suíte no Cypress.
+| Resultado | Quantidade |
+|---|---:|
+| Testes executados | 10 |
+| Aprovados | 10 |
+| Falhos | 0 |
+| Pendentes | 0 |
 
-Não há repositório nem execução no GitHub Actions nesta etapa, conforme a decisão de criar o repositório posteriormente.
+- Instalação das dependências e do Cypress: aprovada.
+- ESLint e verificação dos requisitos: aprovados.
+- Os quatro arquivos de testes foram executados contra a aplicação pública.
+- Relatórios HTML/JSON e vídeos foram publicados no artefato **relatorio-cypress-1**.
+- Os 33 arquivos publicados foram comparados com o projeto preparado, sem diferenças de conteúdo.
 
-## Como concluir a validação
+[Ver execução e baixar as evidências](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41281358544).
 
-No computador, execute:
+[Repositório](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress).
+
+## Execução local e futuras alterações
+
+Na preparação local, o download oficial do aplicativo Cypress retornou HTML com a mensagem **Site Unavailable**, em vez do ZIP. A execução completa acima foi realizada no runner do GitHub, onde a instalação funcionou. A validação E2E confirmada é a dessa execução, não apenas a inspeção estática.
+
+Para repetir no computador:
 
 ```bash
 npm ci
@@ -36,7 +51,5 @@ npm run verificar
 npm test
 ```
 
-Ou envie o projeto ao GitHub e acompanhe o workflow. Confira a quantidade de testes, as falhas e o relatório real produzido.
-
-Depois de obter uma execução completa, registre o link dela junto do repositório. Eventuais falhas devem ser corrigidas e a suíte novamente executada antes da entrega.
+Também é possível executar novamente pela aba **Actions**, selecionando o workflow e **Run workflow**. Mudanças futuras no código devem ser validadas em nova execução; o resultado acima registra a versão identificada pelo commit.
 

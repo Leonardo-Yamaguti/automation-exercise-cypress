@@ -2,6 +2,8 @@
 
 Projeto individual de Leonardo Alan Yamaguti da Silva para Automação Web com Cypress.
 
+**Validação em 01/11/2026:** os dez testes passaram no GitHub Actions, sem falhas ou testes pendentes. [Ver execução e baixar relatórios](https://github.com/Leonardo-Yamaguti/automation-exercise-cypress/actions/runs/41281358544).
+
 Implementa os casos **1, 2, 3, 4, 5, 8, 9, 10, 15 e 16** da aplicação fictícia [Automation Exercise](https://automationexercise.com/test_cases).
 
 ## Começar
@@ -123,7 +125,7 @@ A aplicação pública pode apresentar indisponibilidade, lentidão e anúncios.
 
 A página de pagamento exibe uma confirmação antes de navegar para a página de pedido concluído. A automação confere esse evento e a confirmação final.
 
-Veja [VALIDACAO.md](VALIDACAO.md) para a distinção entre as verificações efetivamente realizadas e a execução E2E que ainda precisa ser confirmada no computador ou na pipeline.
+Veja [VALIDACAO.md](VALIDACAO.md) para os resultados reais e o link da execução confirmada no GitHub Actions.
 
 ## Referências
 
